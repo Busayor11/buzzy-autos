@@ -2,9 +2,8 @@
    BUZZY AUTOS — WEBSITE FUNCTIONALITY
 ========================================== */
 
-// UPDATE THIS WITH THE DEALER'S WHATSAPP NUMBER
-// Use country code without +, spaces, or leading zero.
-const WHATSAPP_NUMBER = "234XXXXXXXXXX";
+// WHATSAPP NUMBER
+const WHATSAPP_NUMBER = "2348032749536";
 
 
 /* ==========================================
@@ -30,11 +29,8 @@ PRICE: ₦5.2M (Slightly negotiable)
 
 DIRECT OWNER DEAL.`,
         features: [
-            "Good Engine",
-            "Good Gear",
-            "Chilling AC",
-            "Nothing to Fix",
-            "Slightly Negotiable"
+            "Good Engine", "Good Gear", "Chilling AC",
+            "Nothing to Fix", "Slightly Negotiable"
         ]
     },
 
@@ -59,13 +55,9 @@ DIRECT OWNER DEAL.`,
 
 PRICE: ₦11.8M (Slightly Negotiable)`,
         features: [
-            "AWD",
-            "Sunroof",
-            "Auto Shade",
-            "Headlight Washer",
-            "89k Miles",
-            "Two-Tone Interior",
-            "Accident Free"
+            "AWD", "Sunroof", "Auto Shade",
+            "Headlight Washer", "89k Miles",
+            "Two-Tone Interior", "Accident Free"
         ]
     },
 
@@ -90,12 +82,9 @@ PRICE: ₦11.8M (Slightly Negotiable)`,
 
 PRICE: ₦23.5M`,
         features: [
-            "Park Assist",
-            "Blind Spot Monitor",
-            "Mouse Control",
-            "Low Mileage",
-            "Untampered Engine",
-            "Good Gear and AC"
+            "Park Assist", "Blind Spot Monitor",
+            "Mouse Control", "Low Mileage",
+            "Untampered Engine", "Good Gear and AC"
         ]
     },
 
@@ -126,13 +115,9 @@ PRICE: ₦7.8M (Slightly Negotiable)
 
 LOCATION: Ikotun-Idimu, Lagos`,
         features: [
-            "Chilling AC",
-            "Good Gear",
-            "Good Engine",
-            "Clean Interior",
-            "Clean Exterior",
-            "Noiseless Legs",
-            "Low Mileage"
+            "Chilling AC", "Good Gear", "Good Engine",
+            "Clean Interior", "Clean Exterior",
+            "Noiseless Legs", "Low Mileage"
         ]
     },
 
@@ -167,15 +152,10 @@ PRICE: ₦37.5M (Slightly Negotiable)
 
 LOCATION: Ikotun, Lagos`,
         features: [
-            "Blind Spot Monitor",
-            "Parking Assist",
-            "Collision Warning System",
-            "Lane Departure Alert",
-            "Smart Key",
-            "Push Start",
-            "Reverse Camera",
-            "Power Tailgate",
-            "Sunroof",
+            "Blind Spot Monitor", "Parking Assist",
+            "Collision Warning System", "Lane Departure Alert",
+            "Smart Key", "Push Start", "Reverse Camera",
+            "Power Tailgate", "Sunroof",
             "Heated & Ventilated Seats"
         ]
     },
@@ -206,13 +186,9 @@ PRICE: ₦57M (Quick Deal)
 
 LOCATION: Amuwo Odofin, Lagos`,
         features: [
-            "AMG Coupe",
-            "Thumbstart",
-            "Sunroof",
-            "360-Degree Camera",
-            "Blind Spot Monitor",
-            "Leather Interior",
-            "Accident Free"
+            "AMG Coupe", "Thumbstart", "Sunroof",
+            "360-Degree Camera", "Blind Spot Monitor",
+            "Leather Interior", "Accident Free"
         ]
     },
 
@@ -238,12 +214,8 @@ MERCEDES-BENZ GLE350 4MATIC
 
 PRICE: ₦57M NET`,
         features: [
-            "4Matic",
-            "Moonroof",
-            "Suction Doors",
-            "Self-Park Assist",
-            "Low Mileage",
-            "360 Camera"
+            "4Matic", "Moonroof", "Suction Doors",
+            "Self-Park Assist", "Low Mileage", "360 Camera"
         ]
     }
 };
@@ -267,30 +239,20 @@ function getWhatsAppLink(car) {
         `Hello Buzzy Autos! I'm interested in the ${car.name} ` +
         `listed at ${car.priceText}. Is it still available?`;
 
-    if (!/^234\d{10}$/.test(WHATSAPP_NUMBER)) {
-        return "";
-    }
-
     return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
 }
 
 function connectWhatsAppButtons() {
     ["whatsappButton", "floatingWhatsapp"].forEach(id => {
         const button = document.getElementById(id);
-
         if (!button) return;
 
         button.href = getWhatsAppLink({
             name: "your available cars",
             priceText: ""
-        }) || "#contact";
-
-        button.addEventListener("click", event => {
-            if (!/^234\d{10}$/.test(WHATSAPP_NUMBER)) {
-                event.preventDefault();
-                alert("Please add the dealer's correct WhatsApp number in script.js first.");
-            }
         });
+        button.target = "_blank";
+        button.rel = "noopener noreferrer";
     });
 }
 
@@ -308,7 +270,6 @@ let touchStartX = 0;
 
 function openCarDetails(carId) {
     const car = cars[carId];
-
     if (!car) return;
 
     activeCar = car;
@@ -327,7 +288,6 @@ function closeCarDetails() {
     modal.classList.remove("open");
     modal.setAttribute("aria-hidden", "true");
     document.body.style.overflow = "";
-
     activeCar = null;
 }
 
@@ -347,23 +307,16 @@ function renderCarDetails() {
         </div>
 
         <div class="gallery-controls">
-            <button id="previousPhoto" type="button">
-                ← Previous
-            </button>
-
+            <button id="previousPhoto" type="button">← Previous</button>
             <span class="gallery-counter">
                 Photo ${activePhoto} of ${car.count}
             </span>
-
-            <button id="nextPhoto" type="button">
-                Next →
-            </button>
+            <button id="nextPhoto" type="button">Next →</button>
         </div>
 
         <div class="gallery-thumbnails" id="galleryThumbnails">
             ${Array.from({ length: car.count }, (_, index) => {
                 const number = index + 1;
-
                 return `
                     <img
                         src="${getImagePath(car, number)}"
@@ -377,29 +330,21 @@ function renderCarDetails() {
         </div>
 
         <span class="eyebrow">${car.status}</span>
-
         <h2 id="modalTitle">${car.name}</h2>
-
         <div class="modal-price">${car.priceText}</div>
-
         <p class="modal-location">📍 ${car.location}</p>
-
         <h3>Vehicle Information</h3>
-
         <p class="modal-description">${car.description}</p>
-
         <h3>Key Features</h3>
 
         <div class="feature-tags">
-            ${car.features.map(feature => `
-                <span>${feature}</span>
-            `).join("")}
+            ${car.features.map(feature => `<span>${feature}</span>`).join("")}
         </div>
 
         <a
             class="whatsapp-button modal-whatsapp"
             id="carWhatsApp"
-            href="${getWhatsAppLink(car) || "#"}"
+            href="${getWhatsAppLink(car)}"
             target="_blank"
             rel="noopener noreferrer"
         >
@@ -428,20 +373,10 @@ function renderCarDetails() {
 
     mainImage.addEventListener("touchend", event => {
         const distance = event.changedTouches[0].clientX - touchStartX;
-
         if (Math.abs(distance) > 45) {
             changePhoto(distance < 0 ? 1 : -1);
         }
     }, { passive: true });
-
-    const enquiry = document.getElementById("carWhatsApp");
-
-    enquiry.addEventListener("click", event => {
-        if (!/^234\d{10}$/.test(WHATSAPP_NUMBER)) {
-            event.preventDefault();
-            alert("Please add the dealer's correct WhatsApp number in script.js first.");
-        }
-    });
 }
 
 function changePhoto(direction) {
@@ -449,20 +384,15 @@ function changePhoto(direction) {
 
     activePhoto += direction;
 
-    if (activePhoto > activeCar.count) {
-        activePhoto = 1;
-    }
-
-    if (activePhoto < 1) {
-        activePhoto = activeCar.count;
-    }
+    if (activePhoto > activeCar.count) activePhoto = 1;
+    if (activePhoto < 1) activePhoto = activeCar.count;
 
     renderCarDetails();
 }
 
 
 /* ==========================================
-   CONNECT VIEW BUTTONS
+   CONNECT CAR VIEW BUTTONS
 ========================================== */
 
 document.querySelectorAll(".view-car-button").forEach(button => {
@@ -485,17 +415,9 @@ document.getElementById("modalBackdrop")
 document.addEventListener("keydown", event => {
     if (!modal.classList.contains("open")) return;
 
-    if (event.key === "Escape") {
-        closeCarDetails();
-    }
-
-    if (event.key === "ArrowRight") {
-        changePhoto(1);
-    }
-
-    if (event.key === "ArrowLeft") {
-        changePhoto(-1);
-    }
+    if (event.key === "Escape") closeCarDetails();
+    if (event.key === "ArrowRight") changePhoto(1);
+    if (event.key === "ArrowLeft") changePhoto(-1);
 });
 
 
@@ -512,16 +434,12 @@ function filterCars() {
     const query = searchInput.value.toLowerCase().trim();
     const brand = brandFilter.value;
 
-    const cards = Array.from(
-        carGrid.querySelectorAll(".car-card")
-    );
+    const cards = Array.from(carGrid.querySelectorAll(".car-card"));
 
     cards.forEach(card => {
         const text = card.innerText.toLowerCase();
-
         const matchesSearch = text.includes(query);
-        const matchesBrand =
-            brand === "all" || card.dataset.brand === brand;
+        const matchesBrand = brand === "all" || card.dataset.brand === brand;
 
         card.hidden = !(matchesSearch && matchesBrand);
     });
@@ -541,8 +459,7 @@ function filterCars() {
         visibleCards.forEach(card => carGrid.appendChild(card));
     }
 
-    document.getElementById("noResults").hidden =
-        visibleCards.length !== 0;
+    document.getElementById("noResults").hidden = visibleCards.length !== 0;
 }
 
 searchInput.addEventListener("input", filterCars);
